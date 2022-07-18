@@ -1,6 +1,7 @@
 import * as express from "express";
 import Post from "../models/post.model";
 import { postModel } from "../models/post.model";
+import PostNotFoundException from "../exceptions/postNotFoundException";
 
 class PostService {
   constructor() {
@@ -18,29 +19,38 @@ class PostService {
     })
   }
 
-  public findPostById(request: express.Request, response: express.Response) {
+  public findPostById(request: express.Request, response: express.Response, next: express.NextFunction) {
     const id: string = request.params.id;
     
     postModel.findById(id).then((post) => {
-      response.send(post)
+      if(post) {
+        response.send(post)
+      } else {
+        next(new PostNotFoundException(id));
+      }
     })
   }
 
-  public updatePost(request: express.Request, response: express.Response) {
+  public updatePost(request: express.Request, response: express.Response, next: express.NextFunction) {
     const id: string = request.params.id;
     const postData: Post = request.body;
-    postModel.findByIdAndUpdate(id, postData, { new: true }).then((post) => {
-      response.send(post)
+    postModel.findByIdAndUpdate(id, postData, { new: true })
+      .then((post) => {
+        if(post) {
+          response.send(post)
+        } else {
+          next(new PostNotFoundException(id))
+        }
     })
   }
 
-  public deletePost(request: express.Request, response: express.Response) {
+  public deletePost(request: express.Request, response: express.Response, next: express.NextFunction) {
     const id: string = request.params.id;
     postModel.findByIdAndDelete(id).then(successResponse => {
       if(successResponse) {
         response.sendStatus(200);
       } else {
-        response.sendStatus(404);
+        next(new PostNotFoundException(id))
       }
     })
   }

@@ -1,6 +1,7 @@
 import * as express from "express";
 import * as bodyParser from "body-parser";
 import connectDB from "./configs/database/db.config";
+import errorMiddleware from "./middleware/error.middleware";
 
 class App {
   public app: express.Application;
@@ -13,6 +14,7 @@ class App {
     this.connectToDatabase();
     this.initializeeMiddlewares();
     this.initializeControllers(controllers);
+    this.initializeErrorHandling();
   }
 
   public listen() {
@@ -23,6 +25,10 @@ class App {
 
   private initializeeMiddlewares() {
     this.app.use(bodyParser.json());
+  }
+
+  private initializeErrorHandling() {
+    this.app.use(errorMiddleware)
   }
 
   private initializeControllers(controllers) {
