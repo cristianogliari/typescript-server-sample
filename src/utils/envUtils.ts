@@ -7,7 +7,8 @@ const envUtils = {
   mongoPassword: `${process.env.MONGO_PASSWORD}`,
   mongoHost: `${process.env.MONGO_SERVER}`,
   mongoPort: `${process.env.MONGO_PORT}`,
-  mongoDatabase: `${process.env.MONGO_DATABASE}`,  
+  mongoDatabase: `${process.env.MONGO_DATABASE}`,
+  jwtSecret: `${process.env.JWT_SECRET}` || `Testeeeee`,
 };
 
 export default envUtils;

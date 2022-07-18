@@ -8,6 +8,4 @@ interface Post {
 }
 
 export const postModel = mongoose.model<Post & mongoose.Document>("Post", postSchema);
-
-
 export default Post;

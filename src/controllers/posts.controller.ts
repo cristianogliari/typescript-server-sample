@@ -2,6 +2,7 @@ import * as express from "express";
 import validationMiddleware from "../middleware/validation.middleware";
 import PostDTO from "../dtos/post.dto";
 import PostService from "../services/post.service";
+import authMiddleware from "../middleware/auth.middleware";
 
 const postService = new PostService();
 
@@ -14,7 +15,11 @@ class PostController {
   }
 
   public initializeRoutes() {
-    this.router.post(this.path, validationMiddleware(PostDTO) ,this.createAPost);
+    // this.router.use(this.path, authMiddleware)
+   
+    // this.router.all(`${this.path}/*`, authMiddleware)
+    this.router.post(this.path, authMiddleware,validationMiddleware(PostDTO) ,this.createAPost);
+    // this.router.post(this.path, validationMiddleware(PostDTO) ,this.createAPost);
     this.router.get(this.path, this.getAllPosts);
     this.router.get(`${this.path}/:id`, this.getById);
     this.router.put(`${this.path}/:id`, this.updateById);

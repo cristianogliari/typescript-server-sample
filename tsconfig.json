@@ -3,13 +3,13 @@
     "experimentalDecorators": true,
     "sourceMap": true,
     "moduleResolution": "node",
-    "module": "CommonJS",
+    "module": "commonjs",
     "target": "es2017",
     "outDir": "./dist",
-    "baseUrl": "./src"
+    // "baseUrl": "."
   },
   "include": [
-    "src/**/**/*.ts"
+    "src/**/*.ts"
   ],
   "exclude": [
     "node_modules",
