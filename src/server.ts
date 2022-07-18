@@ -1,7 +1,11 @@
+import envUtils from "./utils/envUtils";
 import App from "./app";
 import PostController from "./controllers/posts.controller";
 
-const port: number = 8080;
-const server = new App([ new PostController() ], port)
+const port: any = envUtils.serverPort;
+const server = new App(
+  [ 
+    new PostController()
+  ], port)
 
 server.listen();

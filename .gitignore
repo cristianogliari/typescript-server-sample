@@ -41,3 +41,8 @@ yarn.lock
 
 # Package lock
 package-lock.json
+
+.env
+
+# Ignore docker volume data
+/docker-db/data
